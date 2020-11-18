@@ -29,7 +29,7 @@ Uma aplicação feita em Flutter para criação de lista de filmes favoritos, as
    >
    >Para a gerência de estado, o [Flutter BLoC](https://pub.dev/packages/flutter_bloc)
     
-    
+ ### [Link Direto para a versão 1.0.0](https://github.com/FernandoAntonio/movies_list_bloc/releases/download/1.0.0/Meus.Filmes.Favoritos.apk)
     
     
  [![Apresentação App - Meus Filmes Favoritos](https://res.cloudinary.com/marcomontalbano/image/upload/v1605669855/video_to_markdown/images/youtube--TFWWruUNuaY-c05b58ac6eb4c4700831b2b3070cd403.jpg)](https://youtu.be/TFWWruUNuaY "Apresentação App - Meus Filmes Favoritos")
