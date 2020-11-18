@@ -3,14 +3,14 @@
 Uma aplicação feita em Flutter para criação de lista de filmes favoritos, assistidos e não assistidos.
 
 
-### A Aplicação foi construída a partir dos requisitos descritos abaixo:
+### A aplicação foi construída a partir dos requisitos descritos abaixo:
 
    >Cadastrar um filme com foto de capa, nome, diretor e ano e o status de assistido ou não assistido;
    >
    >Ser possível a adição, edição, exlusão de filmes;
 
 
-### A aplicação conta com três telas:
+### Conta com três telas:
 
    >Uma de filmes assistidos
    > 
