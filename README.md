@@ -21,11 +21,11 @@ Uma aplicação feita em Flutter para criação de lista de filmes favoritos, as
 
 ## Foram usados os seguintes componentes técnicos:
 
-    Para navegação de telas, o [Sailor](https://pub.dev/packages/sailor)
-    
-    Para o armazenamento de dados, o [Moor Flutter](https://pub.dev/packages/moor_flutter)
-    
-    Para o formulário, câmera e galeria, o [Flutter Form Builder](https://pub.dev/packages/flutter_form_builder)
-    
-    Para a gerência de estado, o [Flutter BLoC](https://pub.dev/packages/flutter_bloc)
+   >Para navegação de telas, o [Sailor](https://pub.dev/packages/sailor)
+   > 
+   >Para o armazenamento de dados, o [Moor Flutter](https://pub.dev/packages/moor_flutter)
+   >
+   >Para o formulário, câmera e galeria, o [Flutter Form Builder](https://pub.dev/packages/flutter_form_builder)
+   >
+   >Para a gerência de estado, o [Flutter BLoC](https://pub.dev/packages/flutter_bloc)
     
