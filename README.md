@@ -1,4 +1,4 @@
-# Meus Filmes Favoritos
+# Meus Filmes Favoritos :popcorn:
 
 Uma aplicação feita em Flutter para criação de lista de filmes favoritos, assistidos e não assistidos.
 
