@@ -29,3 +29,4 @@ Uma aplicação feita em Flutter para criação de lista de filmes favoritos, as
    >
    >Para a gerência de estado, o [Flutter BLoC](https://pub.dev/packages/flutter_bloc)
     
+![Vídeo de Apresentação do Aplicativo]('assets/videos/app_presentation.mp4')
