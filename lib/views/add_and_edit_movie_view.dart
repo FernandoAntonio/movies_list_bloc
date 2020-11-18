@@ -84,7 +84,7 @@ class _AddAndEditMovieViewState extends State<AddAndEditMovieView> {
       child: Scaffold(
         backgroundColor: kDark1,
         appBar: AppBar(
-          title: Text('Adicionar Filme'),
+          title: Text(widget.isNewMovie ? 'Adicionar Filme' : 'Editar Filme'),
           leading: IconButton(
             icon: Icon(Icons.arrow_back),
             onPressed: () => Routes.sailor.navigate(
