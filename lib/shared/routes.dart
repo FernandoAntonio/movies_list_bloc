@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:movies_list_bloc/model/database/app_database.dart';
 import 'package:movies_list_bloc/views/add_and_edit_movie_view.dart';
 import 'package:movies_list_bloc/views/home_view.dart';
-import 'package:sailor/sailor.dart';
+import 'package:seafarer/seafarer.dart';
 
 class Routes {
-  static final sailor = Sailor(
-    options: SailorOptions(
+  static final seafarer = Seafarer(
+    options: SeafarerOptions(
       defaultTransitions: [
-        SailorTransition.fade_in,
+        SeafarerTransition.fade_in,
       ],
       defaultTransitionCurve: Curves.decelerate,
       defaultTransitionDuration: Duration(milliseconds: 500),
@@ -16,19 +16,19 @@ class Routes {
   );
 
   static void createRoutes() {
-    sailor.addRoutes(
-      <SailorRoute>[
-        SailorRoute(
+    seafarer.addRoutes(
+      <SeafarerRoute>[
+        SeafarerRoute(
           name: HomeView.id,
           builder: (context, args, params) => HomeView(),
         ),
-        SailorRoute(
+        SeafarerRoute(
           name: AddAndEditMovieView.id,
           builder: (context, args, params) => AddAndEditMovieView(
-              params.param<Movie>('movie'), params.param<bool>('isNewMovie')),
+              params.param<Movie>('movie'), params.param<bool>('isNewMovie')!),
           params: [
-            SailorParam<Movie>(name: 'movie'),
-            SailorParam<bool>(name: 'isNewMovie'),
+            SeafarerParam<Movie>(name: 'movie'),
+            SeafarerParam<bool>(name: 'isNewMovie'),
           ],
         ),
       ],

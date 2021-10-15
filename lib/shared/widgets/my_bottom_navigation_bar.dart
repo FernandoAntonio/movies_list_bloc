@@ -3,8 +3,8 @@ import 'package:movies_list_bloc/shared/constants.dart';
 
 class MyBottomNavigatorBar extends StatefulWidget {
   MyBottomNavigatorBar({
-    @required this.pageController,
-    @required this.currentPage,
+    required this.pageController,
+    required this.currentPage,
   });
 
   final PageController pageController;
@@ -48,7 +48,7 @@ class _MyBottomNavigatorBarState extends State<MyBottomNavigatorBar> {
                     ),
                     SizedBox(height: 3.0),
                     Text(
-                      'Vistos'.toUpperCase(),
+                      'Seen'.toUpperCase(),
                       textAlign: TextAlign.center,
                       style: TextStyle(color: kWhite, fontWeight: FontWeight.bold),
                     ),
@@ -79,7 +79,7 @@ class _MyBottomNavigatorBarState extends State<MyBottomNavigatorBar> {
                     ),
                     SizedBox(height: 3.0),
                     Text(
-                      'Não Vistos'.toUpperCase(),
+                      'Unseen'.toUpperCase(),
                       textAlign: TextAlign.center,
                       style: TextStyle(color: kWhite, fontWeight: FontWeight.bold),
                     ),

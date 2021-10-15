@@ -3,7 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:flutter_masked_text/flutter_masked_text.dart';
+import 'package:flutter_masked_text2/flutter_masked_text2.dart';
+import 'package:form_builder_image_picker/form_builder_image_picker.dart';
 import 'package:movies_list_bloc/bloc/bloc.dart';
 import 'package:movies_list_bloc/main.dart';
 import 'package:movies_list_bloc/model/database/app_database.dart';
@@ -12,14 +13,14 @@ import 'package:movies_list_bloc/shared/routes.dart';
 import 'package:movies_list_bloc/shared/widgets/loading_gif.dart';
 import 'package:movies_list_bloc/views/home_view.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:sailor/sailor.dart';
+import 'package:seafarer/seafarer.dart';
 
 class AddAndEditMovieView extends StatefulWidget {
   static const String id = 'AddAndEditMovieView';
 
   AddAndEditMovieView(this.movie, this.isNewMovie);
 
-  final Movie movie;
+  final Movie? movie;
   final bool isNewMovie;
 
   @override
@@ -27,13 +28,13 @@ class AddAndEditMovieView extends StatefulWidget {
 }
 
 class _AddAndEditMovieViewState extends State<AddAndEditMovieView> {
-  FocusNode _firstFocusNode;
-  FocusNode _secondFocusNode;
-  FocusNode _thirdFocusNode;
+  late FocusNode _firstFocusNode;
+  late FocusNode _secondFocusNode;
+  late FocusNode _thirdFocusNode;
 
-  MaskedTextController _yearController;
+  late MaskedTextController _yearController;
 
-  List<FocusNode> _focusList;
+  late List<FocusNode> _focusList;
 
   _onContinuePressed() {
     if (_focusList.last.hasFocus) {
@@ -55,7 +56,7 @@ class _AddAndEditMovieViewState extends State<AddAndEditMovieView> {
       var file =
           await File('${tempDir.path}/image${DateTime.now().millisecondsSinceEpoch}.jpg')
               .create();
-      file.writeAsBytesSync(widget.movie.cover);
+      file.writeAsBytesSync(widget.movie!.cover);
       return file;
     }
   }
@@ -71,23 +72,23 @@ class _AddAndEditMovieViewState extends State<AddAndEditMovieView> {
     ];
 
     _yearController =
-        MaskedTextController(mask: '0000', text: widget?.movie?.year?.toString() ?? '');
+        MaskedTextController(mask: '0000', text: widget.movie?.year.toString() ?? '');
   }
 
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () async => Routes.sailor.navigate(
+      onWillPop: () async => Routes.seafarer.navigate(
         HomeView.id,
         navigationType: NavigationType.pushReplace,
       ),
       child: Scaffold(
         backgroundColor: kDark1,
         appBar: AppBar(
-          title: Text(widget.isNewMovie ? 'Adicionar Filme' : 'Editar Filme'),
+          title: Text(widget.isNewMovie ? 'Add Movie' : 'Edit Movie'),
           leading: IconButton(
             icon: Icon(Icons.arrow_back),
-            onPressed: () => Routes.sailor.navigate(
+            onPressed: () => Routes.seafarer.navigate(
               HomeView.id,
               navigationType: NavigationType.pushReplace,
             ),
@@ -101,10 +102,10 @@ class _AddAndEditMovieViewState extends State<AddAndEditMovieView> {
                 child: FormBuilder(
                   key: formKey,
                   initialValue: {
-                    'cover': widget?.movie?.cover != null ? [data.data] : [],
-                    'name': widget?.movie?.name ?? '',
-                    'director': widget?.movie?.director ?? '',
-                    'watched': widget?.movie?.watched ?? false,
+                    'cover': widget.movie?.cover != null ? [data.data] : [],
+                    'name': widget.movie?.name ?? '',
+                    'director': widget.movie?.director ?? '',
+                    'seen': widget.movie?.seen ?? false,
                   },
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 16.0),
@@ -113,27 +114,22 @@ class _AddAndEditMovieViewState extends State<AddAndEditMovieView> {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         FormBuilderImagePicker(
-                          attribute: 'cover',
+                          name: 'cover',
                           decoration: InputDecoration(
-                            labelText: 'Imagem de capa',
+                            labelText: 'Cover Image',
                             labelStyle: TextStyle(color: kWhite),
                             border: InputBorder.none,
                           ),
-                          defaultImage: AssetImage('assets/images/placeholder.png'),
+                          placeholderImage: AssetImage('assets/images/placeholder.png'),
                           maxImages: 1,
                           maxWidth: 640,
                           iconColor: kWhite,
-                          cameraLabel: Text('Câmera'),
-                          galleryLabel: Text('Galeria'),
-                          validators: [
-                            FormBuilderValidators.required(
-                                errorText: 'Campo obrigarório'),
-                          ],
+                          validator: FormBuilderValidators.required(context),
                         ),
                         FormBuilderTextField(
-                          attribute: 'name',
+                          name: 'name',
                           decoration: InputDecoration(
-                            hintText: 'Título',
+                            hintText: 'Title',
                             hintStyle: TextStyle(color: Colors.grey),
                             enabledBorder: UnderlineInputBorder(
                               borderSide: BorderSide(color: kWhite),
@@ -144,19 +140,18 @@ class _AddAndEditMovieViewState extends State<AddAndEditMovieView> {
                           ),
                           style: TextStyle(color: kWhite),
                           focusNode: _firstFocusNode,
-                          onFieldSubmitted: (value) => _onContinuePressed(),
-                          validators: [
-                            FormBuilderValidators.required(
-                                errorText: 'Campo obrigarório'),
-                            FormBuilderValidators.maxLength(30,
-                                errorText: 'Máximo de 30 caracteres'),
-                          ],
+                          onSubmitted: (value) => _onContinuePressed(),
+                          validator: FormBuilderValidators.compose([
+                            FormBuilderValidators.required(context),
+                            FormBuilderValidators.maxLength(context, 70,
+                                errorText: 'Maximum of 70 characters'),
+                          ]),
                         ),
                         SizedBox(height: 24.0),
                         FormBuilderTextField(
-                          attribute: 'director',
+                          name: 'director',
                           decoration: InputDecoration(
-                            hintText: 'Diretor',
+                            hintText: 'Director',
                             hintStyle: TextStyle(color: Colors.grey),
                             enabledBorder: UnderlineInputBorder(
                               borderSide: BorderSide(color: kWhite),
@@ -167,19 +162,18 @@ class _AddAndEditMovieViewState extends State<AddAndEditMovieView> {
                           ),
                           style: TextStyle(color: kWhite),
                           focusNode: _secondFocusNode,
-                          onFieldSubmitted: (value) => _onContinuePressed(),
-                          validators: [
-                            FormBuilderValidators.required(
-                                errorText: 'Campo obrigarório'),
-                            FormBuilderValidators.maxLength(30,
-                                errorText: 'Máximo de 30 caracteres'),
-                          ],
+                          onSubmitted: (value) => _onContinuePressed(),
+                          validator: FormBuilderValidators.compose([
+                            FormBuilderValidators.required(context),
+                            FormBuilderValidators.maxLength(context, 70,
+                                errorText: 'Maximum of 70 characters'),
+                          ]),
                         ),
                         SizedBox(height: 24.0),
                         FormBuilderTextField(
-                          attribute: 'year',
+                          name: 'year',
                           decoration: InputDecoration(
-                            hintText: 'Ano',
+                            hintText: 'Year',
                             hintStyle: TextStyle(color: Colors.grey),
                             enabledBorder: UnderlineInputBorder(
                               borderSide: BorderSide(color: kWhite),
@@ -192,50 +186,48 @@ class _AddAndEditMovieViewState extends State<AddAndEditMovieView> {
                           controller: _yearController,
                           focusNode: _thirdFocusNode,
                           keyboardType: TextInputType.number,
-                          onFieldSubmitted: (value) => _onContinuePressed(),
-                          validators: [
-                            FormBuilderValidators.required(
-                                errorText: 'Campo obrigarório'),
-                            FormBuilderValidators.min(1900,
-                                errorText: 'Ano mínimo: 1900'),
-                            FormBuilderValidators.max(2100,
-                                errorText: 'Ano máximo: 2100'),
-                          ],
+                          onSubmitted: (value) => _onContinuePressed(),
+                          validator: FormBuilderValidators.compose([
+                            FormBuilderValidators.required(context),
+                            FormBuilderValidators.min(context, 1900,
+                                errorText: 'Minimun year: 1900'),
+                            FormBuilderValidators.max(context, 2100,
+                                errorText: 'Maximum year: 2100'),
+                          ]),
                         ),
                         SizedBox(height: 24.0),
                         FormBuilderCheckbox(
                           checkColor: kDark1,
-                          attribute: 'watched',
-                          focusColor: kWhite,
+                          name: 'seen',
                           activeColor: kWhite,
                           decoration: InputDecoration(
                             border: InputBorder.none,
                             fillColor: kWhite,
                           ),
-                          label: Text(
-                            'Filme já assistido?',
+                          title: Text(
+                            'Seen?',
                             style: TextStyle(color: kWhite, fontSize: 16.0),
                           ),
                         ),
-                        RaisedButton(
-                          color: kDark3,
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(primary: kDark3),
                           child: Padding(
                             padding: const EdgeInsets.symmetric(vertical: 8.0),
                             child: Text(
-                              'Inserir Filme'.toUpperCase(),
+                              'Add Movie'.toUpperCase(),
                               style: TextStyle(color: kWhite),
                             ),
                           ),
                           onPressed: () {
                             final form = formKey.currentState;
-                            if (form.saveAndValidate()) {
+                            if (form!.saveAndValidate()) {
                               if (widget.isNewMovie) {
                                 BlocProvider.of<MoviesBloc>(context).add(InsertMovie());
                               } else if (!widget.isNewMovie) {
                                 BlocProvider.of<MoviesBloc>(context)
-                                    .add(UpdateMovie(widget.movie.id));
+                                    .add(UpdateMovie(widget.movie!.id));
                               }
-                              Routes.sailor.navigate(
+                              Routes.seafarer.navigate(
                                 HomeView.id,
                                 navigationType: NavigationType.pushReplace,
                               );

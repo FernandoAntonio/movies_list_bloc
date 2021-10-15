@@ -16,13 +16,13 @@ class MoviesLoading extends MoviesState {
 }
 
 class MoviesPopulated extends MoviesState {
-  MoviesPopulated(this.watchedMovies, this.unseenMovies);
+  MoviesPopulated(this.seenMovies, this.unseenMovies);
 
-  final Stream<List<Movie>> watchedMovies;
+  final Stream<List<Movie>> seenMovies;
   final Stream<List<Movie>> unseenMovies;
 
   @override
-  List<Object> get props => [watchedMovies, unseenMovies];
+  List<Object> get props => [seenMovies, unseenMovies];
 }
 
 class MoviesError extends MoviesState {

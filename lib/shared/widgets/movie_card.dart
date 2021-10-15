@@ -5,7 +5,7 @@ import 'package:movies_list_bloc/model/database/app_database.dart';
 import 'package:movies_list_bloc/shared/constants.dart';
 import 'package:movies_list_bloc/shared/routes.dart';
 import 'package:movies_list_bloc/views/add_and_edit_movie_view.dart';
-import 'package:sailor/sailor.dart';
+import 'package:seafarer/seafarer.dart';
 
 class MovieCard extends StatelessWidget {
   MovieCard(this.movie);
@@ -71,13 +71,13 @@ class MovieCard extends StatelessWidget {
                   Row(
                     children: [
                       Text(
-                        movie.watched ? 'Assistido' : 'Não Assistido',
+                        movie.seen ? 'Seen' : 'Unseen',
                         textAlign: TextAlign.start,
                         style: TextStyle(color: kGreyDark),
                       ),
                       SizedBox(width: 4.0),
                       Icon(
-                        movie.watched
+                        movie.seen
                             ? Icons.visibility_outlined
                             : Icons.visibility_off_outlined,
                         color: kGreyDark,
@@ -91,7 +91,7 @@ class MovieCard extends StatelessWidget {
           ),
           PopupMenuButton(
             color: kDark3,
-            onSelected: (value) => _onSelected(context, value),
+            onSelected: (String? value) => _onSelected(context, value!),
             child: Padding(
               padding: const EdgeInsets.only(right: 8.0, top: 16.0),
               child: Icon(
@@ -100,7 +100,7 @@ class MovieCard extends StatelessWidget {
               ),
             ),
             itemBuilder: (BuildContext context) {
-              return ['Editar', 'Excluir'].map((String choice) {
+              return ['Edit', 'Delete'].map((String choice) {
                 return PopupMenuItem<String>(
                   value: choice,
                   child: Text(choice),
@@ -116,14 +116,14 @@ class MovieCard extends StatelessWidget {
 
   _onSelected(BuildContext context, String value) {
     switch (value) {
-      case 'Editar':
-        Routes.sailor.navigate(
+      case 'Edit':
+        Routes.seafarer.navigate(
           AddAndEditMovieView.id,
           navigationType: NavigationType.pushReplace,
           params: {'movie': movie, 'isNewMovie': false},
         );
         break;
-      case 'Excluir':
+      case 'Delete':
         BlocProvider.of<MoviesBloc>(context).add(DeleteMovie(movie.id));
         break;
     }

@@ -17,7 +17,7 @@ class GetMovies extends MoviesEvent {
 class UpdateMovie extends MoviesEvent {
   UpdateMovie(this.movieId);
 
-  final int movieId;
+  final String movieId;
 
   @override
   List<Object> get props => [movieId];
@@ -26,7 +26,7 @@ class UpdateMovie extends MoviesEvent {
 class DeleteMovie extends MoviesEvent {
   DeleteMovie(this.movieId);
 
-  final int movieId;
+  final String movieId;
 
   @override
   List<Object> get props => [movieId];

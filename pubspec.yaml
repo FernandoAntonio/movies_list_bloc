@@ -1,37 +1,41 @@
 name: movies_list_bloc
 description: A new Flutter application.
-version: 1.0.0+1
+version: 1.0.1+1
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
+  sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
 
   #Database
-  moor_flutter: ^3.1.0
-  sqlite3_flutter_libs: ^0.2.0
+  moor_flutter: ^4.0.0
+  sqlite3_flutter_libs: ^0.5.1
 
   #State Management
-  flutter_bloc: ^6.1.1
+  flutter_bloc: ^7.3.1
 
   #Utils
-  equatable: ^1.2.5
-  flutter_masked_text: ^0.8.0
-  uuid: ^2.0.2
-  built_value: ^7.0.3
-  path_provider: ^1.6.24
-  flare_flutter: ^2.0.6
-  flutter_form_builder: ^3.14.1
-  sailor: ^0.7.1
+  equatable: ^2.0.3
+  flutter_masked_text2: ^0.9.1
+  uuid: ^3.0.5
+  built_value: ^8.1.2
+  path_provider: ^2.0.5
+  flare_flutter: ^3.0.2
+  flutter_form_builder: ^6.1.0+1
+  seafarer: ^0.1.1
+  form_builder_image_picker: ^1.0.0-nullsafety.0
+  recase: ^4.0.0
+  json_annotation: ^4.3.0
+
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   build_runner:
-  moor_generator: ^3.4.0
-  json_serializable: ^3.5.0
+  moor_generator: ^4.6.0
+  json_serializable: ^6.0.0
 
 flutter:
   uses-material-design: true

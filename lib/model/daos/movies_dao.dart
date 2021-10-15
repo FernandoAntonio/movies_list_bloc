@@ -13,14 +13,15 @@ class MoviesDao extends DatabaseAccessor<AppDatabase> with _$MoviesDaoMixin {
 
   //Read
   Stream<List<Movie>> watchAllWatchedMovies() =>
-      (select(db.movies)..where((t) => t.watched.equals(true))).watch();
+      (select(db.movies)..where((t) => t.seen.equals(true))).watch();
 
   Stream<List<Movie>> watchAllUnseenMovies() =>
-      (select(db.movies)..where((t) => t.watched.equals(false))).watch();
+      (select(db.movies)..where((t) => t.seen.equals(false))).watch();
 
   //Update
   Future updateMovie(Insertable<Movie> movie) => update(db.movies).replace(movie);
 
   //Delete
-  Future deleteMovie(int id) => (delete(db.movies)..where((t) => t.id.equals(id))).go();
+  Future deleteMovie(String id) =>
+      (delete(db.movies)..where((t) => t.id.equals(id))).go();
 }

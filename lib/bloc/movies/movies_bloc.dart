@@ -5,6 +5,7 @@ import 'package:moor_flutter/moor_flutter.dart';
 import 'package:movies_list_bloc/main.dart';
 import 'package:movies_list_bloc/model/database/app_database.dart';
 import 'package:movies_list_bloc/model/repository/app_repository.dart';
+import 'package:uuid/uuid.dart';
 
 import '../bloc.dart';
 
@@ -19,10 +20,8 @@ class MoviesBloc extends Bloc<MoviesEvent, MoviesState> {
       yield MoviesLoading();
 
       try {
-        final Stream<List<Movie>> watchedMovies =
-            AppRepository().watchAllWatchedMovies();
-        final Stream<List<Movie>> unseenMovies =
-            AppRepository().watchAllUnseenMovies();
+        final Stream<List<Movie>> watchedMovies = AppRepository().watchAllWatchedMovies();
+        final Stream<List<Movie>> unseenMovies = AppRepository().watchAllUnseenMovies();
         yield MoviesPopulated(watchedMovies, unseenMovies);
       } catch (e) {
         yield MoviesError();
@@ -31,35 +30,27 @@ class MoviesBloc extends Bloc<MoviesEvent, MoviesState> {
       yield MoviesLoading();
 
       //Get Form info from GlobalKey
-      final String name =
-          formKey.currentState.fields['name'].currentState.value;
+      final String name = formKey.currentState!.fields['name']!.value;
       final Uint8List cover =
-          (formKey.currentState.fields['cover'].currentState.value)
-              .first
-              .readAsBytesSync();
-      final String director =
-          formKey.currentState.fields['director'].currentState.value;
-      final int year =
-          int.parse(formKey.currentState.fields['year'].currentState.value);
-      final bool watched =
-          formKey.currentState.fields['watched'].currentState.value;
+          (formKey.currentState!.fields['cover']!.value).first.readAsBytesSync();
+      final String director = formKey.currentState!.fields['director']!.value;
+      final int year = int.parse(formKey.currentState!.fields['year']!.value);
+      final bool seen = formKey.currentState!.fields['seen']!.value;
 
-      // ignore: missing_required_param
       final Movie movie = Movie(
+        id: Uuid().v1(),
         name: name,
         cover: cover,
         director: director,
         year: year,
-        watched: watched,
+        seen: seen,
       );
 
       try {
         await AppRepository().insertMovie(movie);
 
-        final Stream<List<Movie>> watchedMovies =
-            AppRepository().watchAllWatchedMovies();
-        final Stream<List<Movie>> unseenMovies =
-            AppRepository().watchAllUnseenMovies();
+        final Stream<List<Movie>> watchedMovies = AppRepository().watchAllWatchedMovies();
+        final Stream<List<Movie>> unseenMovies = AppRepository().watchAllUnseenMovies();
         yield MoviesPopulated(watchedMovies, unseenMovies);
       } catch (e) {
         yield MoviesError();
@@ -68,36 +59,27 @@ class MoviesBloc extends Bloc<MoviesEvent, MoviesState> {
       yield MoviesLoading();
 
       //Get Form info from GlobalKey
-      final String name =
-          formKey.currentState.fields['name'].currentState.value;
+      final String name = formKey.currentState!.fields['name']!.value;
       final Uint8List cover =
-          (formKey.currentState.fields['cover'].currentState.value)
-              .first
-              .readAsBytesSync();
-      final String director =
-          formKey.currentState.fields['director'].currentState.value;
-      final int year =
-          int.parse(formKey.currentState.fields['year'].currentState.value);
-      final bool watched =
-          formKey.currentState.fields['watched'].currentState.value;
+          (formKey.currentState!.fields['cover']!.value).first.readAsBytesSync();
+      final String director = formKey.currentState!.fields['director']!.value;
+      final int year = int.parse(formKey.currentState!.fields['year']!.value);
+      final bool seen = formKey.currentState!.fields['seen']!.value;
 
-      // ignore: missing_required_param
       final Movie movie = Movie(
         id: event.movieId,
         name: name,
         cover: cover,
         director: director,
         year: year,
-        watched: watched,
+        seen: seen,
       );
 
       try {
         AppRepository().updateMovie(movie);
 
-        final Stream<List<Movie>> watchedMovies =
-            AppRepository().watchAllWatchedMovies();
-        final Stream<List<Movie>> unseenMovies =
-            AppRepository().watchAllUnseenMovies();
+        final Stream<List<Movie>> watchedMovies = AppRepository().watchAllWatchedMovies();
+        final Stream<List<Movie>> unseenMovies = AppRepository().watchAllUnseenMovies();
         yield MoviesPopulated(watchedMovies, unseenMovies);
       } catch (e) {
         yield MoviesError();
@@ -108,10 +90,8 @@ class MoviesBloc extends Bloc<MoviesEvent, MoviesState> {
       try {
         AppRepository().deleteMovie(event.movieId);
 
-        final Stream<List<Movie>> watchedMovies =
-            AppRepository().watchAllWatchedMovies();
-        final Stream<List<Movie>> unseenMovies =
-            AppRepository().watchAllUnseenMovies();
+        final Stream<List<Movie>> watchedMovies = AppRepository().watchAllWatchedMovies();
+        final Stream<List<Movie>> unseenMovies = AppRepository().watchAllUnseenMovies();
         yield MoviesPopulated(watchedMovies, unseenMovies);
       } catch (e) {
         yield MoviesError();

@@ -9,14 +9,15 @@ class AppRepository {
     _moviesDao = db.moviesDao;
   }
 
-  MoviesDao _moviesDao;
+  late MoviesDao _moviesDao;
 
   Future insertMovie(Insertable<Movie> movie) => _moviesDao.insertMovie(movie);
 
   Stream<List<Movie>> watchAllWatchedMovies() => _moviesDao.watchAllWatchedMovies();
+
   Stream<List<Movie>> watchAllUnseenMovies() => _moviesDao.watchAllUnseenMovies();
 
   updateMovie(Insertable<Movie> movie) => _moviesDao.updateMovie(movie);
 
-  deleteMovie(int id) => _moviesDao.deleteMovie(id);
+  deleteMovie(String id) => _moviesDao.deleteMovie(id);
 }

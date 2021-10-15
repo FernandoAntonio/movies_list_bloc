@@ -17,8 +17,8 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-  PageController _pageController;
-  double _currentPage;
+  late PageController _pageController;
+  late double _currentPage;
 
   @override
   void initState() {
@@ -30,7 +30,7 @@ class _HomeViewState extends State<HomeView> {
     _currentPage = 0;
     _pageController.addListener(() {
       setState(() {
-        _currentPage = _pageController.page;
+        _currentPage = _pageController.page!;
       });
     });
   }
@@ -48,13 +48,13 @@ class _HomeViewState extends State<HomeView> {
       backgroundColor: kDark1,
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: Text('Meus Filmes Favoritos'),
+        title: Text('My Movies List'),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         backgroundColor: kDark3,
         child: Icon(Icons.add, color: kWhite),
-        onPressed: () => Routes.sailor.navigate(
+        onPressed: () => Routes.seafarer.navigate(
           AddAndEditMovieView.id,
           params: {'isNewMovie': true},
         ),
@@ -73,7 +73,7 @@ class _HomeViewState extends State<HomeView> {
         if (state is MoviesEmpty || state is MoviesLoading) {
           return _buildMoviesLoading(context);
         } else if (state is MoviesPopulated) {
-          return _buildMoviesPopulated(context, state.watchedMovies, state.unseenMovies);
+          return _buildMoviesPopulated(context, state.seenMovies, state.unseenMovies);
         } else
           return _buildMoviesLoading(context);
       },
@@ -124,10 +124,10 @@ class _HomeViewState extends State<HomeView> {
     return StreamBuilder<List<Movie>>(
       stream: watchedMovies,
       builder: (context, data) {
-        if (data.data != null && data.data.isNotEmpty) {
+        if (data.data != null && data.data!.isNotEmpty) {
           return ListView.builder(
-            itemCount: data.data.length,
-            itemBuilder: (context, index) => MovieCard(data.data.elementAt(index)),
+            itemCount: data.data!.length,
+            itemBuilder: (context, index) => MovieCard(data.data!.elementAt(index)),
           );
         } else
           return EmptyListGif();
@@ -139,10 +139,10 @@ class _HomeViewState extends State<HomeView> {
     return StreamBuilder<List<Movie>>(
       stream: unseenMovies,
       builder: (context, data) {
-        if (data.data != null && data.data.isNotEmpty) {
+        if (data.data != null && data.data!.isNotEmpty) {
           return ListView.builder(
-            itemCount: data.data.length,
-            itemBuilder: (context, index) => MovieCard(data.data.elementAt(index)),
+            itemCount: data.data!.length,
+            itemBuilder: (context, index) => MovieCard(data.data!.elementAt(index)),
           );
         } else
           return EmptyListGif();

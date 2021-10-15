@@ -21,7 +21,7 @@ class ListConverter extends TypeConverter<ListDatabase, String> {
   const ListConverter();
 
   @override
-  ListDatabase mapToDart(String fromDb) {
+  ListDatabase? mapToDart(String? fromDb) {
     if (fromDb == null) {
       return null;
     }
@@ -29,7 +29,7 @@ class ListConverter extends TypeConverter<ListDatabase, String> {
   }
 
   @override
-  String mapToSql(ListDatabase value) {
+  String? mapToSql(ListDatabase? value) {
     if (value == null) {
       return null;
     }

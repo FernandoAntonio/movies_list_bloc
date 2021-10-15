@@ -7,7 +7,7 @@ import 'package:movies_list_bloc/shared/constants.dart';
 import 'package:movies_list_bloc/shared/routes.dart';
 import 'package:movies_list_bloc/views/home_view.dart';
 
-AppDatabase database;
+late AppDatabase database;
 
 final GlobalKey<FormBuilderState> formKey = GlobalKey<FormBuilderState>();
 
@@ -27,20 +27,24 @@ class MyApp extends StatelessWidget {
         )
       ],
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primaryColor: kDark1,
-          accentColor: kWhite,
           unselectedWidgetColor: kWhite,
-          textSelectionColor: kWhite,
           highlightColor: kWhite,
           indicatorColor: kWhite,
           dividerColor: kWhite,
-          textSelectionHandleColor: kWhite,
-          cursorColor: kWhite,
+          colorScheme:
+              ColorScheme.fromSwatch().copyWith(primary: kDark1, secondary: kWhite),
+          textSelectionTheme: TextSelectionThemeData(
+            cursorColor: kWhite,
+            selectionColor: kWhite,
+            selectionHandleColor: kWhite,
+          ),
         ),
         initialRoute: HomeView.id,
-        navigatorKey: Routes.sailor.navigatorKey,
-        onGenerateRoute: Routes.sailor.generator(),
+        navigatorKey: Routes.seafarer.navigatorKey,
+        onGenerateRoute: Routes.seafarer.generator(),
       ),
     );
   }
